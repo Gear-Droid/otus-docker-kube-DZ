@@ -1,0 +1,36 @@
+# === VIRTUAL ENV ===
+.env
+.venv/
+venv/
+env/
+
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.pytest_cache/
+.coverage
+htmlcov/
+
+# === DJANGO ===
+.env
+.env.*
+secrets.json
+/media/
+/staticfiles/
+/static_collected/
+
+# Логи и БД
+*.log
+*.sqlite3
+/data/
+
+# === EDITORS ===
+.idea/
+.vscode/
+
+# === DOCKER ===
+/data/
+*.log
+docker-compose.override.yml

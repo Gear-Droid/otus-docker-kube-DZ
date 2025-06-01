@@ -1,0 +1,25 @@
+# Файлы окружения
+.env
+.venv
+*.env
+secrets/
+
+# Системные файлы
+.git
+.gitignore
+.idea/
+.vscode/
+.DS_Store
+
+# Логи и БД
+*.log
+*.sqlite3
+/data/
+
+# Python-артефакты
+__pycache__
+*.pyc
+.python-version
+
+Dockerfile
+docker-compose.yml
