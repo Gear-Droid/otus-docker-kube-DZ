@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: otusdz1-db
+  labels:
+    otus.dz1.service: otus-dz1
+spec:
+  serviceName: "db"
+  replicas: 1
+  selector:
+    matchLabels:
+      otus.dz1.service: otus-dz1
+  template:
+    metadata:
+      labels:
+        otus.dz1.service: otus-dz1
+    spec:
+      securityContext:
+        fsGroup: 999  # Группа postgres
+      containers:
+        - name: db
+          image: postgres:14
+          securityContext:
+            runAsGroup: 999
+            runAsUser: 999  # Пользователь postgres
+            capabilities:
+              drop: ["ALL"]
+          command: ["postgres", "-c", "listen_addresses=*"]  # Заставляет PostgreSQL слушать все интерфейсы
+          env:
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-password
+            - name: PGDATA
+              value: /var/lib/postgresql/data
+          ports:
+          - containerPort: 5432
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: db-pvc
+  volumeClaimTemplates:
+    - metadata:
+        name: db-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: standard

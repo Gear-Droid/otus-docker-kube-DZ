@@ -8,10 +8,11 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
-    build: .
+    # build: .
+    image: geardroid/otus-docker-kube-dz1-web:latest
     command: python3 manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
+    # volumes:
+    #   - .:/code
     ports:
       - "8000:8000"
     environment:

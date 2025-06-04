@@ -1,0 +1,18 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  labels:
+    component: velero
+  name: default
+  namespace: velero
+spec:
+  config:
+    bucket: velero-bucket
+    insecureSkipTLSVerify: "true"
+    region: minio
+    s3ForcePathStyle: "true"
+    s3Url: http://minio-tenant-hl.minio-tenant.svc.cluster.local:9000
+  default: true
+  objectStorage:
+    bucket: velero-bucket
+  provider: aws

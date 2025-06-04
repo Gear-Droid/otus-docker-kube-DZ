@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otusdz1-web
+  labels:
+    otus.dz1.service: otus-dz1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      otus.dz1.service: otus-dz1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        otus.dz1.service: otus-dz1
+    spec:
+      containers:
+        - name: web
+          image: geardroid/otus-docker-kube-dz1-web:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          args:
+            - python3
+            - manage.py
+            - runserver
+            - 0.0.0.0:8000
+          env:
+            - name: POSTGRES_NAME
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-password
+          ports:
+            - containerPort: 8000
