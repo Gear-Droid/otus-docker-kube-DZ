@@ -40,5 +40,6 @@ Prerequisites:
 ```
 - Проверка статуса бэкапа:
 ```
-    velero backup describe sfs-backup --details
+    velero backup describe db-backup --details
 ```
+- Проверить содержимое бэкапов можно через minio-console/minio-operator
