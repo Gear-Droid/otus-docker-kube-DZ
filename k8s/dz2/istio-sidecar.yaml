@@ -1,0 +1,18 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-install
+spec:
+  profile: default
+  components:
+    # Включаем автоматическую инъекцию sidecar
+    sidecarInjector:
+      enabled: true
+  values:
+    global:
+      # Настройка автоматической инъекции для всех неймспейсов (опционально)
+      autoInject: enabled
+      # Отключаем взаимное TLS для простоты (по желанию)
+      mtls:
+        auto: false

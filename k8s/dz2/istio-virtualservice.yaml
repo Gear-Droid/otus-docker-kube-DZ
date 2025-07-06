@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: python-server-virtualservice
+  namespace: default
+spec:
+  hosts:
+    - "istio.otus.ru"  # Должен совпадать с Gateway
+  gateways:
+    - python-server-gateway  # Ссылка на Gateway
+  http:
+    - route:
+        - destination:
+            host: web  # Имя Kubernetes Service
+            port:
+              number: 8000  # Порт, на котором работает ваш Python-сервер
